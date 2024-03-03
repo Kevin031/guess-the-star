@@ -19,9 +19,9 @@
       >
       <van-button class="button" round @click="toDesigns">我来出题</van-button>
     </div>
-    <a class="author-link" href="https://github.com/Kevin031" target="_blank"
+    <!-- <a class="author-link" href="https://github.com/Kevin031" target="_blank"
       >关于作者</a
-    >
+    > -->
   </div>
 </template>
 

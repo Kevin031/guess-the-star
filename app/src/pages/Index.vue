@@ -5,7 +5,7 @@
       <a @click="toQuestions">随机 10 题</a>
       <router-link to="/designs">我来出题</router-link>
     </div>
-    <a class="author-link" href="https://github.com/Kevin031" target="_blank"
+    <a class="author-link" href="http://kevinlau.cn" target="_blank"
       >关于作者</a
     >
   </div>
