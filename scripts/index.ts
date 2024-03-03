@@ -108,6 +108,10 @@ function getPartnerInfoFromHtml(source: string) {
         picture: cur.find(".pic > a > img").attr("src"),
         id: cur.attr("id"),
       };
+      // 过滤掉一些无效数据
+      if (item.name.length > 4) {
+        return null;
+      }
       existSet.add(item.id);
       item.pictureFileName = path.basename(item.picture);
       result.push(item);

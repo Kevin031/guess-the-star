@@ -107,6 +107,7 @@ const handleError = (url: string) => {
 .page-designs {
   height: 100vh;
   height: -webkit-fill-available;
+  max-height: 100vh;
   display: flex;
   flex-direction: column;
 }
