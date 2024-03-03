@@ -47,62 +47,71 @@ const handleError = (url: string) => {
 </script>
 
 <template>
-  <div class="partner-header">
-    <span>题库已获取{{ list.length }}条数据</span>
-  </div>
-  <van-list class="partner-list">
-    <van-cell
-      v-for="item in list"
-      :class="[`partner-item`, selected[item.id] ? 'active' : '']"
-      @click="toggleSelect(item)"
-      :key="item.id"
-    >
-      <div class="inner">
-        <van-image
-          width="40"
-          height="60"
-          :src="item.picture"
-          lazy-load
-          fit="cover"
-          @error="() => handleError(item.pictureSource)"
-        ></van-image>
-        <!-- <img :src="item.picture" /> -->
-        <div class="partner-info">
-          <span class="name">{{ item.name }}</span>
-          <span class="job" v-if="!item.job.startsWith('合作作品')">{{
-            item.job
-          }}</span>
+  <div class="page-designs">
+    <div class="partner-header">
+      <span>题库已载入{{ list.length }}条数据</span>
+    </div>
+    <van-list class="partner-list">
+      <van-cell
+        v-for="item in list"
+        :class="[`partner-item`, selected[item.id] ? 'active' : '']"
+        @click="toggleSelect(item)"
+        :key="item.id"
+      >
+        <div class="inner">
+          <van-image
+            width="40"
+            height="60"
+            :src="item.picture"
+            lazy-load
+            fit="cover"
+            @error="() => handleError(item.pictureSource)"
+          ></van-image>
+          <!-- <img :src="item.picture" /> -->
+          <div class="partner-info">
+            <span class="name">{{ item.name }}</span>
+            <span class="job" v-if="!item.job.startsWith('合作作品')">{{
+              item.job
+            }}</span>
+          </div>
+          <div class="selected-icon"><van-icon name="checked" /></div>
         </div>
-        <div class="selected-icon"><van-icon name="checked" /></div>
+      </van-cell>
+    </van-list>
+    <div class="partner-search-input" v-if="showSearch">
+      <input v-model="searchValue" placeholder="输入关键词搜索" />
+    </div>
+    <div class="partner-footer">
+      <div class="footer-sm-btn" @click="handleRandomList">
+        <van-icon name="replay" />
+        <span>乱序</span>
       </div>
-    </van-cell>
-  </van-list>
-  <div class="partner-search-input" v-if="showSearch">
-    <input v-model="searchValue" placeholder="输入关键词搜索" />
-  </div>
-  <div class="partner-footer">
-    <div class="footer-sm-btn" @click="handleRandomList">
-      <van-icon name="replay" />
-      <span>乱序</span>
+      <div class="footer-sm-btn" @click="showSearch = !showSearch">
+        <van-icon name="search" />
+        <span>搜索</span>
+      </div>
+      <van-button
+        round
+        type="primary"
+        :disabled="selectedList.length === 0"
+        @click="confirmQuestions"
+        >确认出题{{
+          selectedList.length ? `（${selectedList.length}）` : ""
+        }}</van-button
+      >
     </div>
-    <div class="footer-sm-btn" @click="showSearch = !showSearch">
-      <van-icon name="search" />
-      <span>搜索</span>
-    </div>
-    <van-button
-      round
-      type="primary"
-      :disabled="selectedList.length === 0"
-      @click="confirmQuestions"
-      >确认出题{{
-        selectedList.length ? `（${selectedList.length}）` : ""
-      }}</van-button
-    >
   </div>
 </template>
 
 <style lang="less">
+.page-designs {
+  height: 100vh;
+  height: -webkit-fill-available;
+  display: flex;
+  flex-direction: column;
+}
 .partner-header {
+  flex-shrink: 0;
   height: 24px;
   font-size: 12px;
   display: flex;
@@ -111,7 +120,8 @@ const handleError = (url: string) => {
   background-color: #f2f2f2;
 }
 .partner-list {
-  height: calc(100vh - 73px - 24px);
+  // height: calc(100vh - 73px - 24px);
+  flex: 1;
   overflow-y: scroll;
 }
 .partner-item {
@@ -148,9 +158,9 @@ const handleError = (url: string) => {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 73px;
+  height: 56px;
   padding: 0 12px;
-  padding-bottom: 17px;
+  flex-shrink: 0;
   box-sizing: border-box;
   .van-button {
     flex: 1;

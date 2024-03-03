@@ -5,6 +5,7 @@ import router from "./router";
 import { createPinia } from "pinia";
 import vant from "vant";
 import { Lazyload } from "vant";
+import "./global";
 import "vant/lib/index.css";
 
 const app = createApp(App);

@@ -21,7 +21,12 @@
         :src="current.picture"
         fit="cover"
       ></van-image>
-      <div class="answer-title">输入你的答案</div>
+      <div class="answer-title">
+        输入你的答案
+        <a @click="handleTip">提示</a>
+        <span v-if="current.tips">：{{ current.tips }}</span>
+        <span v-else>?</span>
+      </div>
       <div class="answer">
         <input
           class="input"
@@ -46,6 +51,7 @@
 import { ref, watch, computed } from "vue";
 import { usePartnersStore } from "@/stores/partners";
 import { useRoute, useRouter } from "vue-router";
+import { showToast } from "vant";
 
 const route = useRoute();
 const router = useRouter();
@@ -60,6 +66,15 @@ const currentIndex = ref(0);
 const current = computed(() => {
   return questionList.value[currentIndex.value];
 });
+
+let isFirstTip = true;
+const handleTip = () => {
+  if (isFirstTip) {
+    showToast("注意：提示会扣除 30% 本题分数");
+    isFirstTip = false;
+  }
+  current.value.tips = current.value.name[0];
+};
 
 const confirmCurrent = () => {
   if (current.value.input === current.value.name) {
@@ -133,7 +148,7 @@ if (store.list.length > 0) {
   flex-direction: column;
   padding: 24px;
   .title {
-    margin-bottom: 24px;
+    margin-bottom: 12px;
     color: var(--van-red);
   }
 }
@@ -152,15 +167,16 @@ if (store.list.length > 0) {
     margin-bottom: 10px;
     justify-content: center;
     .question-tips-item {
-      width: 28px;
-      height: 28px;
+      width: 20px;
+      height: 20px;
+      font-size: 12px;
       background-color: #f2f2f2;
       display: flex;
       align-items: center;
       justify-content: center;
       border-radius: 50%;
-      margin-right: 12px;
-      margin-bottom: 12px;
+      margin-right: 4px;
+      margin-bottom: 4px;
       &.active {
         background-color: var(--van-blue);
         color: #fff;
@@ -185,7 +201,7 @@ if (store.list.length > 0) {
     position: relative;
   }
   .jump {
-    font-size: 14px;
+    font-size: 12px;
     margin-top: 24px;
     color: var(--van-text-color-2);
   }

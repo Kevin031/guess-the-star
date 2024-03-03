@@ -33,7 +33,16 @@ const router = useRouter();
 const list = computed(() => store.resultList);
 
 const result = computed(() => {
-  let rightNum = list.value.filter((item: any) => item.right).length;
+  let rightNum = 0;
+  list.value.forEach((item: any) => {
+    if (item.right) {
+      if (item.tips) {
+        rightNum += 0.7;
+      } else {
+        rightNum += 1;
+      }
+    }
+  });
   let point = Math.floor((rightNum / list.value.length) * 100) || 0;
   let evaluate: any = {};
   if (point >= 0 && point < 20) {
