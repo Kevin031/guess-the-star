@@ -5,6 +5,9 @@
       <a @click="toQuestions">随机 10 题</a>
       <router-link to="/designs">我来出题</router-link>
     </div>
+    <a class="author-link" href="https://github.com/Kevin031" target="_blank"
+      >关于作者</a
+    >
   </div>
 </template>
 
@@ -44,6 +47,10 @@ const toQuestions = () => {
       font-size: 20px;
       margin-bottom: 20px;
     }
+  }
+  .author-link {
+    margin-top: 108px;
+    color: #999;
   }
 }
 </style>
