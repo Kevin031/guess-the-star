@@ -1,0 +1,43 @@
+name: Publish Docker image
+
+on:
+  push:
+    branches:
+      - master
+jobs:
+  push_to_registry:
+    name: Push Docker image to Docker Hub
+    runs-on: ubuntu-latest
+    # 用于配置当前workflow的参数
+    strategy:
+      matrix:
+        node-version: [18.x]
+    steps:
+      # checkout
+      - name: Check out the repo
+        uses: actions/checkout@v2
+
+      # 在当前操作系统安装node
+      # vitepress build
+      - name: Build VitePress with Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: |
+          npm i pnpm -g
+          cd app
+          pnpm install
+          npm run build
+
+      # 资源直接部署到服务器
+      - name: Deploy to Staging My server
+        uses: easingthemes/ssh-deploy@v2.1.6
+        env:
+          # 私钥
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          ARGS: "-rltgoDzvO"
+          SOURCE: "app/dist/"
+          REMOTE_HOST: ${{ secrets.HOST }} #服务器ip
+          REMOTE_USER: "root"
+          TARGET: "/www/wwwroot/guess-the-star.kevinlau.cn/"
+          EXCLUDE: "/node_modules/"

@@ -1,0 +1,29 @@
+{
+  "name": "douban-spider",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "get-data": "ts-node ./scripts/index.ts",
+    "get-image": "ts-node ./scripts/download.ts",
+    "serve": "ts-node ./server/index.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/download": "^8.0.5",
+    "@types/fs-extra": "^11.0.4",
+    "@types/koa": "^2.15.0",
+    "@types/koa-router": "^7.4.8",
+    "@types/node": "^20.11.24",
+    "axios": "^1.6.7",
+    "cheerio": "1.0.0-rc.12",
+    "download": "^8.0.0",
+    "fs-extra": "^11.2.0",
+    "koa": "^2.15.0",
+    "koa-router": "^12.0.1",
+    "ts-node": "^10.9.2"
+  }
+}
